@@ -1,0 +1,27 @@
+name: CI with NPM
+
+on:
+  pull_request:
+    branches: [ "develop", "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+    
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
