@@ -8,6 +8,8 @@ import LoginPage from "@/pages/LoginPage/LoginPage";
 import PaymentPage from "@/pages/PaymentPage/PaymentPage";
 import SearchPage from "@/pages/SearchPage/SearchPage";
 import SignupPage from "@/pages/SignupPage/SignupPage";
+import FileAskListPage from "@/pages/FileAskListPage/FileAskListPage";
+import FileAskPage from "@/pages/FileAskPage/FileAskPage";
 
 const Router = () => {
   return (
@@ -22,6 +24,8 @@ const Router = () => {
         <Route path="/filedetail/:id" element={<FileDetailPage />} />
         <Route path="/main" element={<MainPage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/fileasklist" element={<FileAskListPage />} />
+        <Route path="/fileask" element={<FileAskPage />} />
       </Routes>
     </BrowserRouter>
   );
