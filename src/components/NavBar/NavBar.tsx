@@ -21,14 +21,14 @@ const NavBar = () => {
             <img src={lank} alt="Lank" />
             <a>랭킹 페이지</a>
           </div>
-          <div className="nav-item" onClick={() => navigate("/main")}>
+          <div className="nav-item" onClick={() => navigate("/fileask")}>
             <img src={doc} alt="Doc" />
             <a>문서 요청하기</a>
           </div>
         </div>
       </div>
       <div className="right">
-        <div className="nav-button" onClick={() => navigate("/signup")}>
+        <div className="nav-button" onClick={() => navigate("/fileupload")}>
           <img src={add} alt="add" />
           <a>자료 올리기</a>
         </div>
