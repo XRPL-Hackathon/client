@@ -14,7 +14,7 @@ const NavBar = () => {
     <S.NavBar>
       <div className="left">
         <div className="logo">
-          <img src={logo} alt="Logo" />
+          <img src={logo} alt="Logo" onClick={() => navigate("/main")} />
         </div>
         <div className="nav-items">
           <div className="nav-item" onClick={() => navigate("/lank")}>
