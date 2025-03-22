@@ -6,13 +6,28 @@ import { useNavigate } from "react-router";
 import search from "@/assets/image/Search.svg";
 import frontArrow from "@/assets/image/frontArrow.svg";
 import backArrow from "@/assets/image/backArrow.svg";
-// import API from "@/api/index";
+import API from "@/api/index";
+
+interface Document {
+  document_id: string; // document_id는 문자열
+  file_id: string; // file_id도 문자열
+  document_name: string; // document_name은 문자열
+  document_image_url: string; // URL은 문자열로 처리
+  introduction: string; // introduction은 문자열
+  downloads: number; // 다운로드 수는 숫자
+  pageNumber: number; // 페이지 수는 숫자
+  upload_date: string; // 업로드 날짜는 문자열 (ISO 8601 포맷)
+  uploader: string; // 업로더 ID는 문자열 (UUID 형식)
+  price: number; // 가격은 숫자
+  category: string; // 카테고리는 문자열 (예: "category_piano")
+  rating: number; // 평점은 숫자
+}
 
 const MainPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const navigate = useNavigate();
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<Document[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8; // 한 페이지에 보여줄 아이템 수
   const users = [
@@ -44,101 +59,17 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    const fetchedData = [
-      // 더미 데이터
-      {
-        id: 1,
-        name: "React로 배우는 프론트엔드",
-        category: "시험자료",
-        image: "image1.jpg",
-      },
-      {
-        id: 2,
-        name: "JavaScript 핵심 문법",
-        category: "이력서",
-        image: "image2.jpg",
-      },
-      {
-        id: 3,
-        name: "HTML5 & CSS3 마스터",
-        category: "레포트",
-        image: "image3.jpg",
-      },
-      {
-        id: 4,
-        name: "웹 개발의 기초",
-        category: "이력서",
-        image: "image4.jpg",
-      },
-      {
-        id: 5,
-        name: "Node.js 기초부터 실전까지",
-        category: "시험자료",
-        image: "image5.jpg",
-      },
-      {
-        id: 6,
-        name: "디자인 패턴과 아키텍처",
-        category: "레포트",
-        image: "image6.jpg",
-      },
-      {
-        id: 7,
-        name: "Git으로 협업하는 방법",
-        category: "이력서",
-        image: "image7.jpg",
-      },
-      {
-        id: 8,
-        name: "Typescript 완벽 가이드",
-        category: "시험자료",
-        image: "image8.jpg",
-      },
-      {
-        id: 9,
-        name: "React로 배우는 프론트엔드",
-        category: "시험자료",
-        image: "image1.jpg",
-      },
-      {
-        id: 10,
-        name: "JavaScript 핵심 문법",
-        category: "이력서",
-        image: "image2.jpg",
-      },
-      {
-        id: 11,
-        name: "HTML5 & CSS3 마스터",
-        category: "레포트",
-        image: "image3.jpg",
-      },
-      {
-        id: 12,
-        name: "웹 개발의 기초",
-        category: "이력서",
-        image: "image4.jpg",
-      },
-      {
-        id: 13,
-        name: "Node.js 기초부터 실전까지",
-        category: "시험자료",
-        image: "image5.jpg",
-      },
-      {
-        id: 14,
-        name: "디자인 패턴과 아키텍처",
-        category: "레포트",
-        image: "image6.jpg",
-      },
-      {
-        id: 15,
-        name: "Git으로 협업하는 방법",
-        category: "이력서",
-        image: "image7.jpg",
-      },
-    ];
+    const fetchData = async () => {
+      try {
+        const response = await API.get("/documents");
+        console.log(response); // API 응답 확인
+        setData(response.data); // 데이터를 상태에 저장
+      } catch (error) {
+        console.error("데이터를 불러오는 중 오류가 발생했습니다:", error);
+      }
+    };
 
-    setData(fetchedData);
+    fetchData(); // API 호출 실행
   }, []);
 
   // 더미 데이터
@@ -242,14 +173,17 @@ const MainPage = () => {
           <div className="title">모든 자료</div>
           <hr />
           <S.FileItemList>
-            {currentData.map((item) => (
-              <S.FileItem key={item.id}>
+            {currentData.map((item, index) => (
+              <S.FileItem
+                key={index}
+                onClick={() => navigate(`/filedetail/${item.document_id}`)}
+              >
                 <S.FileImage>
-                  <img src={item.image} alt={item.name} />
+                  <img src={item.document_image_url} alt={item.document_name} />
                 </S.FileImage>
                 <S.FileInfo>
                   <S.FileLabel>{item.category}</S.FileLabel>
-                  <S.FileDescription>{item.name}</S.FileDescription>
+                  <S.FileDescription>{item.document_name}</S.FileDescription>
                 </S.FileInfo>
               </S.FileItem>
             ))}
