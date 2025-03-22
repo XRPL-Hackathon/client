@@ -31,9 +31,9 @@ const MainPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8; // 한 페이지에 보여줄 아이템 수
   const users = [
-    { name: "홍길동", rank: 1, points: 5000 },
-    { name: "김철수", rank: 2, points: 4500 },
-    { name: "박영희", rank: 3, points: 3000 },
+    { name: "오은진", rank: 1, points: 3200 },
+    { name: "김초련", rank: 2, points: 2100 },
+    { name: "이유진", rank: 3, points: 2020 },
   ];
 
   const currentData = data.slice(
