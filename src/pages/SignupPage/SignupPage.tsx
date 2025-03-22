@@ -36,7 +36,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps, onPr
   );
 };
 
-const SignupForm: React.FC = () => {
+const SignupForm: React.FC<{ handleNext: () => void }> = ({ handleNext }) => {
   let navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -121,7 +121,10 @@ const SignupForm: React.FC = () => {
           </PasswordContainer>
         </FormGroup>
         
-        <SubmitButton type="submit" >다음</SubmitButton>
+        <SubmitButton type="button" onClick={() => {
+    console.log("다음 버튼 클릭됨");
+    handleNext();
+  }}>다음</SubmitButton>
       </form>
       
       <ForgotPassword>
@@ -181,11 +184,11 @@ const SignupPage: React.FC = () => {
   };
 
   const handleNext = () => {
+    console.log("handleNext 호출됨! 현재 단계:", currentStep);
     if (currentStep < totalSteps) {
       setCurrentStep(prev => prev + 1);
     }
   };
-
   return (
     <AppContainer>
       <Header>
@@ -202,7 +205,8 @@ const SignupPage: React.FC = () => {
             onNext={handleNext}
           />
           {/* <SignupForm /> */}
-          <WalletForm />
+          {/* <WalletForm /> */}
+          {currentStep === 1 ? <SignupForm handleNext={handleNext} /> : <WalletForm />}
           
       </Main>
     </AppContainer>
