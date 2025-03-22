@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import LoginIllustration from '../../assets/login-illustration.svg';
 import BookVector from '../../assets/book_vector.svg'
+import { useNavigate } from 'react-router-dom';
 
 // Styled Components
 const AppContainer = styled.div`
@@ -190,6 +191,8 @@ const RegisterLink = styled.a`
 `;
 
 const LoginPage: React.FC = () => {
+  let navigate = useNavigate();
+
   return (
     <AppContainer>
       <Header>
@@ -243,7 +246,7 @@ const LoginPage: React.FC = () => {
             
             <RegisterSection>
               <span>계정이 없으신가요?</span>
-              <RegisterLink href="#">회원가입</RegisterLink>
+              <RegisterLink onClick={() => navigate('/signup')}>회원가입</RegisterLink>
             </RegisterSection>
           </FormSection>
         </ContentContainer>
