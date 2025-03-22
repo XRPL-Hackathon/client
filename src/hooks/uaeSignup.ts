@@ -1,4 +1,5 @@
 import * as AWSCognitoIdentity from "amazon-cognito-identity-js";
+import signIn from "@/hooks/usrLogin";
 
 const userPoolData: AWSCognitoIdentity.ICognitoUserPoolData = {
   UserPoolId: "ap-northeast-2_36GFLZBtI",
@@ -42,12 +43,24 @@ export async function signUp({
         result: AWSCognitoIdentity.ISignUpResult | undefined
       ): void => {
         if (err) reject({ message: err.message || JSON.stringify(err) });
-        else
+        else {
           resolve({
             message:
               result?.user.getUsername() +
               "님, 회원 가입이 성공적으로 완료되었습니다.",
           });
+
+          signIn(Email, Password);
+
+          while (!localStorage.getItem("access_token")) {
+            continue;
+          }
+
+          console.log(
+            "AccessToken in signup:",
+            localStorage.getItem("access_token")
+          );
+        }
       }
     );
   });
