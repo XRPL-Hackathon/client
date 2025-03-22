@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 // 전체 컨테이너
 export const AppContainer = styled.div`
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   width: 100vw;
   min-height: 100vh;
   margin: 0;
@@ -38,7 +39,7 @@ export const Main = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 200px);
   padding: 20px;
   width: 100%;
   box-sizing: border-box;
@@ -144,7 +145,7 @@ export const ForgotPassword = styled.a`
   font-size: 13px;
   color: #555;
   text-decoration: none;
-  
+
   &:hover {
     text-decoration: underline;
   }
@@ -178,7 +179,7 @@ export const RegisterLink = styled.a`
   color: #4a7bff;
   text-decoration: none;
   font-weight: 500;
-  
+
   &:hover {
     text-decoration: underline;
   }

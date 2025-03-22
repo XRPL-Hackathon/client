@@ -185,10 +185,30 @@ export const NavBar = styled.div`
   .user-name {
     color: #171a1f;
     font-family: Inter;
-    font-size: 14px;
+    font-size: 18px;
     font-style: normal;
     font-weight: 400;
     line-height: 22px; /* 157.143% */
+  }
+
+  .content {
+    display: flex;
+    width: 244px;
+    height: 40px;
+    justify-content: start;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0);
+    color: #565d6d;
+    font-family: Inter;
+    font-size: 16px;
+    font-style: bold;
+    font-weight: 600;
+    line-height: 22px; /* 157.143% */
+    margin-left: 18px;
+    margin-bottom: 5px;
   }
 
   /* 작은 화면에서 메뉴가 세로로 나열되도록 */
@@ -217,4 +237,34 @@ export const NavBar = styled.div`
       gap: 8px; /* 세로 간격 좁히기 */
     }
   }
+`;
+
+export const StyledLankLabel = styled.div<{ rank: string }>`
+  background-color: ${({ rank }) =>
+    rank === "브론즈"
+      ? "#FFF5F0"
+      : rank === "실버"
+      ? "#F4F6FB"
+      : rank === "골드"
+      ? "#FEF9EE"
+      : "#EFFCFA"};
+  color: ${({ rank }) =>
+    rank === "브론즈"
+      ? "#672700"
+      : rank === "실버"
+      ? "#263F6D"
+      : rank === "골드"
+      ? "#98690C"
+      : "#147567"};
+  border-radius: 18px;
+  width: 80px;
+  height: 32px;
+  font-size: 14px;
+  text-align: center; /* 텍스트 가운데 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  margin-bottom: 10px;
+  margin-left: 10px;
 `;
