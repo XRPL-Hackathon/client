@@ -9,17 +9,12 @@ const API = axios.create({
 
 // 요청 시 Authorization 헤더 추가
 API.interceptors.request.use((config) => {
-  if (
-    !localStorage.getItem(
-      "CognitoIdentityServiceProvider.7j09fmn00udb6fpt8hhij1jlqk.e4089d5c-d0f1-7074-6b70-a4fcc7bae68c.accessToken"
-    )
-  ) {
+  if (!localStorage.getItem("accessToken")) {
     console.log("토큰없음.");
     return config;
   }
-  const token = localStorage.getItem(
-    "CognitoIdentityServiceProvider.7j09fmn00udb6fpt8hhij1jlqk.e4089d5c-d0f1-7074-6b70-a4fcc7bae68c.accessToken"
-  );
+  const token = localStorage.getItem("accessToken");
+  console.log("토큰:", token);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }

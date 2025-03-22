@@ -25,8 +25,9 @@ const signIn = (username: string, password: string) => {
     user.authenticateUser(authDetails, {
       onSuccess: (session) => {
         console.log("로그인 성공", session);
-        const accessToken = session.getAccessToken().getJwtToken();
 
+        const accessToken = session.getAccessToken().getJwtToken();
+        localStorage.setItem("accessToken", accessToken);
         resolve(accessToken);
       },
       onFailure: (err) => {
