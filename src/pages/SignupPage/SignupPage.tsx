@@ -35,19 +35,13 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
   );
 };
 
-const SignupForm: React.FC<{ handleNext: () => void }> = ({ handleNext }) => {
+const SignupForm: React.FC<{ handleNext: () => void; formData: any; setFormData: any }> = ({ handleNext, formData, setFormData }) => {
   let navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
-  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev: any) => ({ ...prev, [name]: value })); // 부모 컴포넌트의 상태 업데이트
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -130,7 +124,7 @@ const SignupForm: React.FC<{ handleNext: () => void }> = ({ handleNext }) => {
   );
 };
 
-const WalletForm: React.FC = () => {
+const WalletForm: React.FC<{ handleNext: () => void }> = ({ handleNext }) => {
   let navigate = useNavigate();
 
   return (
@@ -161,6 +155,9 @@ const WalletForm: React.FC = () => {
         
       </form>
       
+      {/* 임의로 넣은 버튼임 */}
+      <SubmitButton type="button" onClick={handleNext}>다음</SubmitButton>
+
       <ForgotPassword>
         이미 계정이 있으신가요?<ForgotLink onClick={() => navigate('/')}>로그인</ForgotLink>
       </ForgotPassword>
@@ -168,7 +165,7 @@ const WalletForm: React.FC = () => {
   );
 };
 
-const SuccessForm: React.FC = () => {
+const SuccessForm: React.FC<{ formData: any }> = ({ formData }) => {
   let navigate = useNavigate();
 
   return (
@@ -181,7 +178,7 @@ const SuccessForm: React.FC = () => {
           <img src={SuccessIcon}></img>
           <WalletButtonContainer>
             <SuccessMessage>
-              Name님의 지갑이 <br></br>
+              {formData.name}님의 지갑이 <br></br>
               연동 완료되었습니다!
             </SuccessMessage>
           </WalletButtonContainer>
@@ -200,10 +197,18 @@ const SuccessForm: React.FC = () => {
 // Main Component
 const SignupPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 2;
+  const totalSteps = 3;
+
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
 
   const handleNext = () => {
     console.log("handleNext 호출됨! 현재 단계:", currentStep);
+    console.log("현재 formData 상태:", formData);
     if (currentStep < totalSteps) {
       setCurrentStep(prev => prev + 1);
     }
@@ -221,10 +226,9 @@ const SignupPage: React.FC = () => {
             currentStep={currentStep} 
             totalSteps={totalSteps}
           />
-          {/* <SignupForm /> */}
-          {/* <WalletForm /> */}
-          <SuccessForm></SuccessForm>
-          {/* {currentStep === 1 ? <SignupForm handleNext={handleNext} /> : <WalletForm />} */}
+          {currentStep === 1 && <SignupForm handleNext={handleNext} formData={formData} setFormData={setFormData} />}
+          {currentStep === 2 && <WalletForm handleNext={handleNext} />}
+          {currentStep === 3 && <SuccessForm formData={formData} />}
           
       </Main>
     </AppContainer>
