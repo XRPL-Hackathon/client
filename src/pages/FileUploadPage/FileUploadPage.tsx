@@ -1,6 +1,6 @@
 import NavBar from "@/components/NavBar/NavBar";
 import * as S from "@/pages/FileUploadPage/FileUploadPage.style";
-import upload from "@/assets/image/upload.svg";
+import Upload from "./FileUpload";
 
 const FileUploadPage = () => {
   return (
@@ -9,10 +9,7 @@ const FileUploadPage = () => {
       <S.StyledFileUploadPage>
         <div className="title">새 자료 업로드</div>
         <S.FileUploadContent>
-          <S.FileUpload>
-            <img src={upload} alt="upload" />
-            <span className="text">클릭하거나 파일을 드래그 하여 업로드</span>
-          </S.FileUpload>
+          <Upload />
           <S.FileUploadDescription>
             <form>
               <ul className="ul">

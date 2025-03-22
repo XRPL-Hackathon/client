@@ -24,33 +24,6 @@ export const FileUploadContent = styled.div`
   gap: 30px;
 `;
 
-export const FileUpload = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  width: 55vh;
-  height: 25vw;
-  flex-shrink: 0;
-  border-radius: 16px;
-  border: 0px solid #9095a1;
-  background: #fff;
-  box-shadow: 0px 0px 2px 0px rgba(23, 26, 31, 0.12),
-    0px 4px 9px 0px rgba(23, 26, 31, 0.11);
-  gap: 20%;
-
-  .text {
-    color: #379ae6;
-    text-align: center;
-    font-family: Archivo;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 28px; /* 155.556% */
-  }
-`;
-
 export const FileUploadDescription = styled.div`
   display: flex;
   flex-direction: column;
