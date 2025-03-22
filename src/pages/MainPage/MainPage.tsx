@@ -176,7 +176,9 @@ const MainPage = () => {
             {currentData.map((item, index) => (
               <S.FileItem
                 key={index}
-                onClick={() => navigate(`/filedetail/${item.document_id}`)}
+                onClick={() =>
+                  navigate(`/filedetail/${item.document_id}`, { state: item })
+                }
               >
                 <S.FileImage>
                   <img src={item.document_image_url} alt={item.document_name} />

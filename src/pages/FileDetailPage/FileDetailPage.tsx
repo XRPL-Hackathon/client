@@ -1,30 +1,30 @@
 import React from "react";
 import NavBar from "@/components/NavBar/NavBar";
 import RLUSD from "@/assets/image/RLUSD.svg";
+import { useLocation, useNavigate } from "react-router-dom";
 
-interface DocumentData {
-  title: string;
-  rating: number;
-  downloads: number;
-  pages: number;
-  date: string;
-  publisher: string;
-  description: string;
-  price: number;
-  currency: string;
+interface Document {
+  document_id: string; // document_id는 문자열
+  file_id: string; // file_id도 문자열
+  document_name: string; // document_name은 문자열
+  document_image_url: string; // URL은 문자열로 처리
+  introduction: string; // introduction은 문자열
+  downloads: number; // 다운로드 수는 숫자
+  pageNumber: number; // 페이지 수는 숫자
+  upload_date: string; // 업로드 날짜는 문자열 (ISO 8601 포맷)
+  uploader: string; // 업로더 ID는 문자열 (UUID 형식)
+  price: number; // 가격은 숫자
+  category: string; // 카테고리는 문자열 (예: "category_piano")
+  rating: number; // 평점은 숫자
 }
 
 const FileDetailPage: React.FC = () => {
-  const documentData: DocumentData = {
-    title: "문서명",
-    rating: 4.5,
-    downloads: 368,
-    pages: 25,
-    date: "2025.03.20",
-    publisher: "윤길동",
-    description: "파일 업로드 때 작성한 문서 소개글",
-    price: 59.99,
-    currency: "RLUSD",
+  const location = useLocation();
+  const navigator = useNavigate();
+  const documentData: Document = location.state as Document;
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toISOString().split("T")[0]; // 날짜만 반환 (YYYY-MM-DD)
   };
 
   return (
@@ -74,9 +74,11 @@ const FileDetailPage: React.FC = () => {
                 marginTop: "20px", // 기존보다 위쪽 마진 추가하여 아래로 내림
               }}
             >
-              <div style={{ color: "black", fontSize: "14px" }}>
-                문서 이미지
-              </div>
+              <img
+                src={documentData.document_image_url}
+                alt=""
+                style={{ width: "100%", height: "100%" }}
+              />
             </div>
 
             {/* 문서 정보 컨테이너 */}
@@ -105,7 +107,7 @@ const FileDetailPage: React.FC = () => {
                   📕
                 </span>
                 <h2 style={{ margin: 0, fontSize: "20px", fontWeight: "bold" }}>
-                  {documentData.title}
+                  {documentData.document_name}
                 </h2>
               </div>
 
@@ -116,12 +118,20 @@ const FileDetailPage: React.FC = () => {
                 {[
                   { label: "평점", value: documentData.rating },
                   { label: "다운로드", value: documentData.downloads },
-                  { label: "페이지", value: documentData.pages },
-                  { label: "등록", value: documentData.date },
+                  { label: "페이지", value: documentData.pageNumber },
+                  {
+                    label: "등록",
+                    value: formatDate(documentData.upload_date),
+                  },
                 ].map((item, index) => (
                   <div
                     key={index}
-                    style={{ display: "flex", flexDirection: "column" }}
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      gap: "5px",
+                      alignItems: "center",
+                    }}
                   >
                     <span style={{ fontWeight: "bold", fontSize: "14px" }}>
                       {item.value}
@@ -151,7 +161,7 @@ const FileDetailPage: React.FC = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  {documentData.publisher}
+                  {documentData.uploader}
                 </span>
               </div>
 
@@ -177,7 +187,7 @@ const FileDetailPage: React.FC = () => {
                     minHeight: "60px",
                   }}
                 >
-                  {documentData.description}
+                  {documentData.introduction}
                 </div>
               </div>
 
@@ -207,7 +217,7 @@ const FileDetailPage: React.FC = () => {
                     {documentData.price}
                   </span>
                   <span style={{ fontSize: "16px", color: "#999" }}>
-                    {documentData.currency}
+                    {documentData.price === 0 ? "무료" : "RLUSD"}
                   </span>
                 </div>
               </div>
@@ -225,7 +235,11 @@ const FileDetailPage: React.FC = () => {
                   cursor: "pointer",
                   width: "100%",
                 }}
-                onClick={() => console.log("구매하기 버튼 클릭됨")}
+                onClick={() =>
+                  navigator("/payment/${documentData.document_id}", {
+                    state: documentData,
+                  })
+                }
               >
                 구매하기
               </button>
