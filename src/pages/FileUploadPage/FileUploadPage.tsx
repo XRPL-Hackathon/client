@@ -1,7 +1,7 @@
 import NavBar from "@/components/NavBar/NavBar";
 import * as S from "@/pages/FileUploadPage/FileUploadPage.style";
 import Upload from "./FileUpload";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import API from "@/api/index";
 
 const FileUploadPage = () => {
