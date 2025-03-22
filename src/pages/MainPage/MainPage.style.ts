@@ -15,6 +15,21 @@ export const StyledDiv = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+
+  .title {
+    color: #424856;
+    font-family: Inter;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px; /* 155.556% */
+
+    margin-top: 10px;
+    border-bottom: 1px solid #dee1e6;
+    align-items: left;
+    width: 100%;
+    padding-bottom: 20px;
+  }
 `;
 export const SearchItemDiv = styled.div`
   position: relative;
@@ -23,6 +38,7 @@ export const SearchItemDiv = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-bottom: 20px;
 `;
 
 export const StyledForm = styled.form`
@@ -62,6 +78,7 @@ export const SearchItemList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
+  box-shadow: 0 4px 8px rgba(109, 108, 108, 0.1);
 `;
 
 export const SearchItem = styled.button`
@@ -84,7 +101,7 @@ export const CategoryDiv = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  margin-top: 13px;
+  margin-bottom: 10px;
 `;
 
 export const CategoryItem = styled.button`
@@ -111,12 +128,13 @@ export const CategoryItem = styled.button`
 export const MainContent = styled.div`
   padding: 20px;
   display: flex;
-  margin-top: 30px;
+  margin-top: 20px;
   width: 100%;
   justify-content: center;
   border-radius: 16px;
   border: 1px solid #dee1e6;
   background: #fff;
+  flex-direction: column;
 `;
 
 // SearchItemList (아이템 리스트)
@@ -133,7 +151,7 @@ export const FileItem = styled.div`
   border-radius: 16px;
   border: 1px solid #dee1e6;
   background: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(109, 108, 108, 0.1);
   overflow: hidden;
   cursor: pointer;
   transition: transform 0.3s ease-in-out;
@@ -182,4 +200,51 @@ export const FileDescription = styled.p`
   margin-left: 10px;
   margin-bottom: 0px;
   margin-top: 0px;
+`;
+
+export const StyledLankPage = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin: 20px 16px;
+  gap: 16px;
+`;
+
+export const PaginationWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 15px;
+  margin-bottom: 50px;
+`;
+
+export const PageButton = styled.button<{ active: boolean }>`
+  padding: 8px 12px;
+  background-color: ${({ active }) => (active ? "#636ae8" : "#fff")};
+  color: ${({ active }) => (active ? "#fff" : "#9095A1")};
+  border-radius: 16px;
+  border: 1px solid ${({ active }) => (active ? "#636ae8" : "#dee1e6")};
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${({ active }) => (active ? "#636ae8" : "#f0f0f0")};
+    border-color: #636ae8; /* hover 시 border 색상 변경 */
+  }
+`;
+
+export const ArrowButton = styled.button`
+  padding: 8px;
+  background-color: #fff;
+  color: #636ae8;
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #fff; /* 화살표 버튼에는 hover 배경색을 없애거나 투명하게 */
+  }
+`;
+
+export const Ellipsis = styled.span`
+  color: #636ae8;
 `;

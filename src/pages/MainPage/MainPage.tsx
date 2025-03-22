@@ -4,18 +4,42 @@ import useDebounce from "@/hooks/useDebounce";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import search from "@/assets/image/Search.svg";
+import frontArrow from "@/assets/image/frontArrow.svg";
+import backArrow from "@/assets/image/backArrow.svg";
 
 const MainPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const navigate = useNavigate();
-  // 데이터를 저장할 상태 선언
   const [data, setData] = useState<any[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 8; // 한 페이지에 보여줄 아이템 수
 
-  // 컴포넌트 마운트 시 데이터를 가져오는 useEffect
+  const currentData = data.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+
+  const createPageButtons = () => {
+    const pageButtons = [];
+    const range = 2; // "현재 페이지"를 기준으로 보여줄 범위
+
+    for (
+      let i = Math.max(1, currentPage - range);
+      i <= Math.min(totalPages, currentPage + range);
+      i++
+    ) {
+      pageButtons.push(i);
+    }
+
+    return pageButtons;
+  };
+
   useEffect(() => {
-    // JSON 데이터를 서버에서 받는다고 가정 (여기서는 직접 정의)
     const fetchedData = [
+      // 더미 데이터
       {
         id: 1,
         name: "React로 배우는 프론트엔드",
@@ -64,9 +88,50 @@ const MainPage = () => {
         category: "시험자료",
         image: "image8.jpg",
       },
+      {
+        id: 9,
+        name: "React로 배우는 프론트엔드",
+        category: "시험자료",
+        image: "image1.jpg",
+      },
+      {
+        id: 10,
+        name: "JavaScript 핵심 문법",
+        category: "이력서",
+        image: "image2.jpg",
+      },
+      {
+        id: 11,
+        name: "HTML5 & CSS3 마스터",
+        category: "레포트",
+        image: "image3.jpg",
+      },
+      {
+        id: 12,
+        name: "웹 개발의 기초",
+        category: "이력서",
+        image: "image4.jpg",
+      },
+      {
+        id: 13,
+        name: "Node.js 기초부터 실전까지",
+        category: "시험자료",
+        image: "image5.jpg",
+      },
+      {
+        id: 14,
+        name: "디자인 패턴과 아키텍처",
+        category: "레포트",
+        image: "image6.jpg",
+      },
+      {
+        id: 15,
+        name: "Git으로 협업하는 방법",
+        category: "이력서",
+        image: "image7.jpg",
+      },
     ];
 
-    // 데이터를 상태에 저장
     setData(fetchedData);
   }, []);
 
@@ -89,6 +154,29 @@ const MainPage = () => {
       <NavBar />
       <S.StyledDiv>
         <S.SearchDiv>
+          <S.CategoryDiv>
+            <S.CategoryItem onClick={() => navigate("/search")}>
+              모든자료
+            </S.CategoryItem>
+            <S.CategoryItem onClick={() => navigate("/search")}>
+              시험 자료
+            </S.CategoryItem>
+            <S.CategoryItem onClick={() => navigate("/search")}>
+              자소서
+            </S.CategoryItem>
+            <S.CategoryItem onClick={() => navigate("/search")}>
+              이력서
+            </S.CategoryItem>
+            <S.CategoryItem onClick={() => navigate("/search")}>
+              레포트
+            </S.CategoryItem>
+            <S.CategoryItem onClick={() => navigate("/search")}>
+              악보
+            </S.CategoryItem>
+            <S.CategoryItem onClick={() => navigate("/search")}>
+              기타
+            </S.CategoryItem>
+          </S.CategoryDiv>
           <S.StyledDiv>
             <S.StyledForm>
               <img src={search} alt="search" />
@@ -120,33 +208,13 @@ const MainPage = () => {
               </S.SearchItemList>
             )}
           </S.SearchItemDiv>
-          <S.CategoryDiv>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              모든자료
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              시험 자료
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              자소서
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              이력서
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              레포트
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              악보
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              기타
-            </S.CategoryItem>
-          </S.CategoryDiv>
         </S.SearchDiv>
+
         <S.MainContent>
+          <div className="title">모든 자료</div>
+          <hr />
           <S.FileItemList>
-            {data.map((item) => (
+            {currentData.map((item) => (
               <S.FileItem key={item.id}>
                 <S.FileImage>
                   <img src={item.image} alt={item.name} />
@@ -159,6 +227,32 @@ const MainPage = () => {
             ))}
           </S.FileItemList>
         </S.MainContent>
+
+        {/* 페이지네이션 */}
+        <S.PaginationWrapper>
+          <S.ArrowButton
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          >
+            <img src={backArrow} alt="◁" />
+          </S.ArrowButton>
+          {createPageButtons().map((page: number) => (
+            <S.PageButton
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              active={page === currentPage}
+            >
+              {page}
+            </S.PageButton>
+          ))}
+          {currentPage + 2 < totalPages && <S.Ellipsis>...</S.Ellipsis>}
+          <S.ArrowButton
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+          >
+            <img src={frontArrow} alt="▷" />
+          </S.ArrowButton>
+        </S.PaginationWrapper>
       </S.StyledDiv>
     </>
   );
