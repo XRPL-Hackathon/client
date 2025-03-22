@@ -10,7 +10,8 @@ import {
   Main, ProgressBarContainer, Navigation, NavButton, Indicators, 
   Dot, SignupContainer, Title, Subtitle, FormGroup, Label, Input,
   PasswordContainer, ToggleVisibility, SubmitButton, ForgotPassword, 
-  ForgotLink, WalletButton, WalletButtonContainer, WalletContainer, SuccessMessage
+  ForgotLink, WalletButton, WalletButtonContainer, WalletContainer, SuccessMessage,
+  EyeIcon, Form
 } from './SignupPage.style';
 
 // Component Interfaces
@@ -37,7 +38,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
 
 const SignupForm: React.FC<{ handleNext: () => void; formData: any; setFormData: any }> = ({ handleNext, formData, setFormData }) => {
   let navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -55,7 +55,7 @@ const SignupForm: React.FC<{ handleNext: () => void; formData: any; setFormData:
       <Title>회원가입</Title>
       <Subtitle>회원 정보 입력</Subtitle>
       
-      <form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label htmlFor="name">이름</Label>
           <Input 
@@ -84,7 +84,6 @@ const SignupForm: React.FC<{ handleNext: () => void; formData: any; setFormData:
           <Label htmlFor="password">비밀번호</Label>
           <PasswordContainer>
             <Input 
-              type={showPassword ? "text" : "password"} 
               id="password" 
               name="password"
               placeholder="비밀번호를 입력해주세요."
@@ -98,24 +97,25 @@ const SignupForm: React.FC<{ handleNext: () => void; formData: any; setFormData:
           <Label htmlFor="confirmPassword">비밀번호 확인</Label>
           <PasswordContainer>
             <Input 
-              type={showPassword ? "text" : "password"} 
               id="confirmPassword" 
               name="confirmPassword"
               placeholder="비밀번호를 입력해주세요."
               value={formData.confirmPassword}
               onChange={handleChange}
             />
-            <ToggleVisibility 
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              👁️
+            <ToggleVisibility >
+              <EyeIcon>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </EyeIcon>
             </ToggleVisibility>
           </PasswordContainer>
         </FormGroup>
         
         <SubmitButton type="button" onClick={() => {handleNext();}}>다음</SubmitButton>
-      </form>
+      </Form>
       
       <ForgotPassword>
         이미 계정이 있으신가요?<ForgotLink onClick={() => navigate('/')}>로그인</ForgotLink>
@@ -178,8 +178,8 @@ const SuccessForm: React.FC<{ formData: any }> = ({ formData }) => {
           <img src={SuccessIcon}></img>
           <WalletButtonContainer>
             <SuccessMessage>
-              {formData.name}님의 지갑이 <br></br>
-              연동 완료되었습니다!
+              {formData.name}님의 지갑 연동이 <br></br>
+              완료되었습니다!
             </SuccessMessage>
           </WalletButtonContainer>
         </WalletContainer>
