@@ -76,7 +76,7 @@ const FileDetailPage: React.FC = () => {
             >
               <img
                 src={documentData.document_image_url}
-                alt=""
+                alt={documentData.document_name}
                 style={{ width: "100%", height: "100%" }}
               />
             </div>

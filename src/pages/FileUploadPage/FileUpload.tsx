@@ -2,6 +2,7 @@ import * as S from "@/pages/FileUploadPage/FileUpload.style";
 import { ChangeEvent, useCallback, useRef, useState, useEffect } from "react";
 import upload from "@/assets/image/upload.svg";
 import remove from "@/assets/image/remove.svg";
+import axios from "axios";
 
 interface FileFormat {
   id: number;
@@ -14,6 +15,7 @@ const Upload = () => {
   const dragRef = useRef<HTMLLabelElement | null>(null);
   const fileId = useRef<number>(0);
 
+  // 파일 상태 업데이트 함수
   const onChangeFiles = useCallback(
     (e: ChangeEvent<HTMLInputElement> | any): void => {
       let selectFiles: File[] = [];
@@ -42,6 +44,7 @@ const Upload = () => {
     e.preventDefault();
   };
 
+  // 파일 삭제 처리
   const handleDeleteFile = useCallback(
     (id: number): void => {
       setFiles(files.filter((file: FileFormat) => file.id !== id));
@@ -49,6 +52,7 @@ const Upload = () => {
     [files]
   );
 
+  // 드래그 이벤트 처리
   const handleDragIn = useCallback((e: DragEvent): void => {
     e.preventDefault();
     e.stopPropagation();
@@ -57,14 +61,12 @@ const Upload = () => {
   const handleDragOut = useCallback((e: DragEvent): void => {
     e.preventDefault();
     e.stopPropagation();
-
     setIsDragging(false);
   }, []);
 
   const handleDragOver = useCallback((e: DragEvent): void => {
     e.preventDefault();
     e.stopPropagation();
-
     if (e.dataTransfer!.files) {
       setIsDragging(true);
     }
@@ -74,7 +76,6 @@ const Upload = () => {
     (e: DragEvent): void => {
       e.preventDefault();
       e.stopPropagation();
-
       onChangeFiles(e);
       setIsDragging(false);
     },
@@ -99,10 +100,41 @@ const Upload = () => {
     }
   }, [handleDragIn, handleDragOut, handleDragOver, handleDrop]);
 
+  // 드래그 이벤트 초기화
   useEffect(() => {
     initDragEvents();
     return () => resetDragEvents();
   }, [initDragEvents, resetDragEvents]);
+
+  // 서버로 파일을 업로드하는 함수
+  const uploadFile = async () => {
+    if (files.length === 0) {
+      alert("파일이 없습니다.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("file", files[0].content); // 첫 번째 파일을 전송
+    console.log("파일 업로드 시작: ", files[0].content, formData);
+    try {
+      const response = await axios.post(
+        "http://13.124.96.218:8000/files",
+        { file: files[0].content },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+
+      console.log("파일 업로드 성공:", response.data);
+      localStorage.setItem("fileId", response.data.file_id);
+    } catch (error) {
+      console.error("파일 업로드 실패:", error);
+    }
+  };
 
   return (
     <S.UploadWrapper>
@@ -150,6 +182,9 @@ const Upload = () => {
         style={{ display: "none" }}
         onChange={onChangeFiles} // 하나의 파일만 추가
       />
+      <button onClick={uploadFile} style={{ margin: "20px 0px" }}>
+        파일 업로드
+      </button>
     </S.UploadWrapper>
   );
 };
