@@ -3,7 +3,7 @@ import * as S from "@/pages/MainPage/MainPage.style";
 import useDebounce from "@/hooks/useDebounce";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import search from "@/assets/image/search.svg";
+import search from "@/assets/image/Search.svg";
 
 const MainPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
