@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import search from "@/assets/image/Search.svg";
 import frontArrow from "@/assets/image/frontArrow.svg";
 import backArrow from "@/assets/image/backArrow.svg";
-import API from "@/api/index";
+// import API from "@/api/index";
 
 const MainPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
