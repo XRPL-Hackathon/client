@@ -65,7 +65,7 @@ const NavBar = () => {
                 <img src={doc} alt="Doc" />
                 문서 요청하기
               </a>
-              <a href="/mypage">
+              <a href="/lank">
                 <img src={lank} alt="Lank" />
                 랭킹 페이지
               </a>
