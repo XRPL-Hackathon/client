@@ -55,6 +55,7 @@ const LankPage = () => {
           <Table />
         </S.Lank>
       </S.StyledLankPage>
+      <S.MarginDiv></S.MarginDiv>
     </>
   );
 };

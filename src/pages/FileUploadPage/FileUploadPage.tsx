@@ -95,6 +95,7 @@ const FileUploadPage = () => {
           </S.FileUploadDescription>
         </S.FileUploadContent>
       </S.StyledFileUploadPage>
+      <S.MarginDiv></S.MarginDiv>
     </>
   );
 };

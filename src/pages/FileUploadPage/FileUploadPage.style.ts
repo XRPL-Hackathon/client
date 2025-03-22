@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+export const MarginDiv = styled.div`
+  height: 50px;
+`;
+
 export const StyledFileUploadPage = styled.div`
   margin-top: 25px;
   display: flex;

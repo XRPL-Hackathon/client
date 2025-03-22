@@ -1,5 +1,8 @@
 import styled from "styled-components";
 
+export const MarginDiv = styled.div`
+  height: 50px;
+`;
 export const StyledLankPage = styled.div`
   display: flex;
   align-items: start;
