@@ -70,7 +70,11 @@ const Table = () => {
               <td className="td">{item.no}</td>
               <td className="td">{item.name}</td>
               <td className="td">{item.points}</td>
-              <td className="td">{item.ranking}</td>
+              <td className="td">
+                <S.StyledLankLabel rank={item.ranking}>
+                  {item.ranking}
+                </S.StyledLankLabel>
+              </td>
             </tr>
           ))}
         </tbody>
