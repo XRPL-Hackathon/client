@@ -38,7 +38,6 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) =>
 
 const SignupForm: React.FC<{ handleNext: () => void; formData: any; setFormData: any }> = ({ handleNext, formData, setFormData }) => {
   let navigate = useNavigate();
-  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -85,7 +84,6 @@ const SignupForm: React.FC<{ handleNext: () => void; formData: any; setFormData:
           <Label htmlFor="password">비밀번호</Label>
           <PasswordContainer>
             <Input 
-              type={showPassword ? "text" : "password"} 
               id="password" 
               name="password"
               placeholder="비밀번호를 입력해주세요."
@@ -99,7 +97,6 @@ const SignupForm: React.FC<{ handleNext: () => void; formData: any; setFormData:
           <Label htmlFor="confirmPassword">비밀번호 확인</Label>
           <PasswordContainer>
             <Input 
-              type={showPassword ? "text" : "password"} 
               id="confirmPassword" 
               name="confirmPassword"
               placeholder="비밀번호를 입력해주세요."
@@ -181,8 +178,8 @@ const SuccessForm: React.FC<{ formData: any }> = ({ formData }) => {
           <img src={SuccessIcon}></img>
           <WalletButtonContainer>
             <SuccessMessage>
-              {formData.name}님의 지갑이 <br></br>
-              연동 완료되었습니다!
+              {formData.name}님의 지갑 연동이 <br></br>
+              완료되었습니다!
             </SuccessMessage>
           </WalletButtonContainer>
         </WalletContainer>
