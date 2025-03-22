@@ -30,7 +30,6 @@ const signIn = (username: string, password: string) => {
         console.log("AccessToken in login:", accessToken);
 
         resolve(accessToken);
-        return accessToken;
       },
       onFailure: (err) => {
         console.error("로그인 실패:", err.message);
