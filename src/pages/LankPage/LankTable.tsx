@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as S from "@/pages/LankPage/LankTable.style";
 import frontArrow from "@/assets/image/frontArrow.svg";
 import backArrow from "@/assets/image/backArrow.svg";
