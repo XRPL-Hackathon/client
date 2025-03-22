@@ -105,7 +105,7 @@ export const SignupContainer = styled.div`
 export const Title = styled.h1`
   color: #171A1F;
   text-align: center;
-  font-family: Archivo;
+  font-family: Pretendard;
   font-size: 32px;
   font-style: normal;
   font-weight: 700;
@@ -114,7 +114,7 @@ export const Title = styled.h1`
 export const Subtitle = styled.h2`
   color: #323842;
   text-align: center;
-  font-family: Archivo;
+  font-family: Pretendard;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -123,6 +123,7 @@ export const Subtitle = styled.h2`
 
 export const FormGroup = styled.div`
   margin-bottom: 1rem;
+  min-width: 400px;
 `;
 
 export const Label = styled.label`
@@ -150,13 +151,14 @@ export const PasswordContainer = styled.div`
 
 export const ToggleVisibility = styled.button`
   position: absolute;
-  right: 10px;
+  right: 5px;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
   color: #888;
+  outline: none;
 `;
 
 export const SubmitButton = styled.button`
@@ -218,9 +220,26 @@ export const WalletButton = styled.button`
 
 export const SuccessMessage = styled.h1`
   color: #171A1F;
-font-family: Archivo;
+font-family: Pretendard;
 font-size: 32px;
 font-style: normal;
 font-weight: 700;
 line-height: 48px; /* 150% */
+`;
+
+export const EyeIcon = styled.div`
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #777;
+  outline: none;
+`;
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 `;
