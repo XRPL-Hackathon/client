@@ -186,3 +186,32 @@ export const ForgotLink = styled.a`
   cursor: pointer;
   margin-left: 0.5rem;
 `;
+
+export const WalletContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-top:2rem;
+  padding-bottom:1rem;
+`;
+
+export const WalletButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  width: 100%;
+`;
+
+export const WalletButton = styled.button`
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 5px;
+  border: 1px solid #565E6D;
+  background: #FFF;
+  color: black;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  box-sizing: border-box;
+`;

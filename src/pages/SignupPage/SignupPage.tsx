@@ -1,13 +1,15 @@
 import BookVector from '../../assets/book_vector.svg'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import WalletIcon from '../../assets/wallet_icon.svg';
+import ConnectIcon from '../../assets/connect_icon.svg'
 
 import {
   AppContainer, Header, HeaderContent, BookLogo, HeaderLogo, 
   Main, ProgressBarContainer, Navigation, NavButton, Indicators, 
   Dot, SignupContainer, Title, Subtitle, FormGroup, Label, Input,
   PasswordContainer, ToggleVisibility, SubmitButton, ForgotPassword, 
-  ForgotLink
+  ForgotLink, WalletButton, WalletButtonContainer, WalletContainer
 } from './SignupPage.style';
 
 // Component Interfaces
@@ -54,8 +56,6 @@ const SignupForm: React.FC = () => {
     // Handle form submission
     console.log(formData);
   };
-
-  
 
   return (
     <SignupContainer>
@@ -133,16 +133,33 @@ const SignupForm: React.FC = () => {
 
 const WalletForm: React.FC = () => {
   let navigate = useNavigate();
+
   return (
     <SignupContainer>
       <Title>회원가입</Title>
       <Subtitle>XRP 지갑 연동하기</Subtitle>
       
       <form>
+        <div style={{ marginBottom: '20px' }}>
+          <WalletContainer>
+            <img src={WalletIcon}></img>
+            <WalletButtonContainer>
+              <div>XRP 지갑이 있다면,</div>
+              <WalletButton>지갑 연동하기</WalletButton>
+            </WalletButtonContainer>
+          </WalletContainer>
+
+        </div>
+        <div style={{ marginBottom: '20px' }}>
+          <WalletContainer>
+            <img src={ConnectIcon}></img>
+            <WalletButtonContainer>
+              <div>XRP 지갑이 없다면,</div>
+              <WalletButton>지갑 발급하기</WalletButton>
+            </WalletButtonContainer>
+          </WalletContainer>
+        </div>
         
- 
-        
-        <SubmitButton type="submit" >다음</SubmitButton>
       </form>
       
       <ForgotPassword>
