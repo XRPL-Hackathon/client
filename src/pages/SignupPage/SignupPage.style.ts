@@ -1,8 +1,9 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 // 전체 컨테이너
 export const AppContainer = styled.div`
-  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   width: 100vw;
   min-height: 100vh;
   margin: 0;
@@ -68,7 +69,7 @@ export const NavButton = styled.button`
   cursor: pointer;
   font-size: 1.5rem;
   color: #888;
-  
+
   &:focus {
     outline: none;
   }
@@ -89,7 +90,7 @@ export const Dot = styled.div<DotProps>`
   height: 15px;
   flex-shrink: 0;
   border-radius: 50%;
-  background-color: ${props => props.active ? '#7C7E83' : '#DEE1E6'};
+  background-color: ${(props) => (props.active ? "#7C7E83" : "#DEE1E6")};
 `;
 
 export const SignupContainer = styled.div`
@@ -103,7 +104,7 @@ export const SignupContainer = styled.div`
 `;
 
 export const Title = styled.h1`
-  color: #171A1F;
+  color: #171a1f;
   text-align: center;
   font-family: Pretendard;
   font-size: 32px;
@@ -138,7 +139,7 @@ export const Input = styled.input`
   border-radius: 5px;
   font-size: 1rem;
   background-color: #f5f5f5;
-  
+
   &:focus {
     outline: none;
     border-color: #5165f6;
@@ -171,7 +172,7 @@ export const SubmitButton = styled.button`
   font-size: 1rem;
   cursor: pointer;
   margin-top: 1rem;
-  
+
   &:hover {
     background-color: #4050d0;
   }
@@ -193,8 +194,8 @@ export const WalletContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 18px;
-  padding-top:2rem;
-  padding-bottom:1rem;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
 `;
 
 export const WalletButtonContainer = styled.div`
@@ -209,8 +210,8 @@ export const WalletButton = styled.button`
   width: 100%;
   padding: 0.75rem;
   border-radius: 5px;
-  border: 1px solid #565E6D;
-  background: #FFF;
+  border: 1px solid #565e6d;
+  background: #fff;
   color: black;
   font-size: 1rem;
   cursor: pointer;
@@ -243,3 +244,4 @@ export const Form = styled.form`
   align-items: center;
   width: 100%;
 `;
+

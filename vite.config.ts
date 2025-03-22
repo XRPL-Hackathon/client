@@ -10,4 +10,7 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"), // 절대 경로로 src 디렉토리 설정
     },
   },
+  define: {
+    global: {},
+  },
 });
