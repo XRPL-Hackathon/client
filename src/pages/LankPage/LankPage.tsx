@@ -1,5 +1,12 @@
+import NavBar from "@/components/NavBar/NavBar";
+
 const LankPage = () => {
-  return <h1>LankPage</h1>;
+  return (
+    <>
+      <NavBar />
+      <h1>LankPage</h1>
+    </>
+  );
 };
 
 export default LankPage;

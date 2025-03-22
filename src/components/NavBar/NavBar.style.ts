@@ -45,6 +45,7 @@ export const NavBar = styled.div`
     align-items: flex-start;
     gap: 8px;
     flex-shrink: 0;
+    border-bottom: 2px solid rgba(0, 0, 0, 0);
   }
 
   .nav-items a {
@@ -56,8 +57,17 @@ export const NavBar = styled.div`
     line-height: 22px; /* 157.143% */
   }
 
-  .nav-items a:hover {
-    color: #007bff; /* 호버 시 색상 변화 */
+  .nav-item:hover {
+    border-bottom: 2px solid #636ae8;
+  }
+
+  .active {
+    display: flex;
+    padding: 24px 23.75px 24px 17.75px;
+    align-items: flex-start;
+    gap: 8px;
+    flex-shrink: 0;
+    border-bottom: 2px solid #636ae8;
   }
 
   .nav-button {
