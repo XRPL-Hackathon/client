@@ -14,6 +14,11 @@ const MainPage = () => {
   const [data, setData] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8; // 한 페이지에 보여줄 아이템 수
+  const users = [
+    { name: "홍길동", rank: 1, points: 5000 },
+    { name: "김철수", rank: 2, points: 4500 },
+    { name: "박영희", rank: 3, points: 3000 },
+  ];
 
   const currentData = data.slice(
     (currentPage - 1) * itemsPerPage,
@@ -154,29 +159,51 @@ const MainPage = () => {
       <NavBar />
       <S.StyledDiv>
         <S.SearchDiv>
-          <S.CategoryDiv>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              모든자료
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              시험 자료
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              자소서
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              이력서
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              레포트
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              악보
-            </S.CategoryItem>
-            <S.CategoryItem onClick={() => navigate("/search")}>
-              기타
-            </S.CategoryItem>
-          </S.CategoryDiv>
+          <S.CategoryWrapper>
+            <S.CategoryDiv>
+              <S.CategoryItem onClick={() => navigate("/search")}>
+                모든자료
+              </S.CategoryItem>
+              <S.CategoryItem onClick={() => navigate("/search")}>
+                시험 자료
+              </S.CategoryItem>
+              <S.CategoryItem onClick={() => navigate("/search")}>
+                자소서
+              </S.CategoryItem>
+              <S.CategoryItem onClick={() => navigate("/search")}>
+                이력서
+              </S.CategoryItem>
+              <S.CategoryItem onClick={() => navigate("/search")}>
+                레포트
+              </S.CategoryItem>
+              <S.CategoryItem onClick={() => navigate("/search")}>
+                악보
+              </S.CategoryItem>
+              <S.CategoryItem onClick={() => navigate("/search")}>
+                기타
+              </S.CategoryItem>
+            </S.CategoryDiv>
+
+            <S.LankDiv>
+              <S.RankWrapper>
+                <S.RankContent>
+                  {users.map((user, index) => (
+                    <S.RankItem
+                      key={index}
+                      onClick={() => {
+                        navigate("/lank");
+                      }}
+                    >
+                      <S.StyledLankLabel rank={user.rank}>
+                        {user.rank}위
+                      </S.StyledLankLabel>
+                      {user.name} ({user.points}점)
+                    </S.RankItem>
+                  ))}
+                </S.RankContent>
+              </S.RankWrapper>
+            </S.LankDiv>
+          </S.CategoryWrapper>
           <S.StyledDiv>
             <S.StyledForm>
               <img src={search} alt="search" />

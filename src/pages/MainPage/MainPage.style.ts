@@ -5,8 +5,17 @@ export const SearchDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  margin-top: 50px;
+  margin-top: 30px;
   width: 75vw;
+`;
+
+export const CategoryWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
 `;
 
 export const StyledDiv = styled.div`
@@ -247,4 +256,69 @@ export const ArrowButton = styled.button`
 
 export const Ellipsis = styled.span`
   color: #636ae8;
+`;
+
+export const StyledLankLabel = styled.div<{ rank: number }>`
+  display: flex;
+  justify-content: center; /* 수평 가운데 정렬 */
+  align-items: center; /* 수직 가운데 정렬 */
+  \
+  color: ${({ rank }) =>
+    rank === 1
+      ? "#D5A11E"
+      : rank === 2
+      ? "#A3A3A3"
+      : rank === 3
+      ? "#CD7F32"
+      : "#9095A1"};
+  border-radius: 18px;
+  padding: 5px 10px;
+  font-size: 16px;
+`;
+export const LankDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1px;
+`;
+export const RankWrapper = styled.div`
+  display: flex;
+  flex-direction: column; /* 수직 정렬 */
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  height: 40px; /* 충분히 높이를 키워서 애니메이션이 보이게 설정 */
+  overflow: hidden;
+  margin-bottom: 10px;
+`;
+
+export const RankContent = styled.div`
+  display: flex;
+  flex-direction: column; /* 수직으로 배치 */
+  animation: slide 9s infinite; /* 슬라이드 애니메이션 */
+
+  @keyframes slide {
+    0% {
+      transform: translateY(40px);
+    }
+    33.33% {
+      transform: translateY(0px); /* 첫 번째 아이템이 위로 이동 */
+    }
+    66.66% {
+      transform: translateY(-40px); /* 두 번째 아이템이 위로 이동 */
+    }
+    100% {
+      transform: translateY(40px); /* 다시 원위치 */
+    }
+  }
+`;
+
+export const RankItem = styled.div`
+  flex: 0 0 30px; /* 고정된 크기로 설정 */
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  margin: 0 10px;
+  border-radius: 8px;
 `;
