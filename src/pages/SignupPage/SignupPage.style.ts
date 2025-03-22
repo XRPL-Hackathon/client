@@ -215,3 +215,12 @@ export const WalletButton = styled.button`
   margin-top: 0.5rem;
   box-sizing: border-box;
 `;
+
+export const SuccessMessage = styled.h1`
+  color: #171A1F;
+font-family: Archivo;
+font-size: 32px;
+font-style: normal;
+font-weight: 700;
+line-height: 48px; /* 150% */
+`;

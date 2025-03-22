@@ -3,34 +3,33 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import WalletIcon from '../../assets/wallet_icon.svg';
 import ConnectIcon from '../../assets/connect_icon.svg'
+import SuccessIcon from '../../assets/succes.svg'
 
 import {
   AppContainer, Header, HeaderContent, BookLogo, HeaderLogo, 
   Main, ProgressBarContainer, Navigation, NavButton, Indicators, 
   Dot, SignupContainer, Title, Subtitle, FormGroup, Label, Input,
   PasswordContainer, ToggleVisibility, SubmitButton, ForgotPassword, 
-  ForgotLink, WalletButton, WalletButtonContainer, WalletContainer
+  ForgotLink, WalletButton, WalletButtonContainer, WalletContainer, SuccessMessage
 } from './SignupPage.style';
 
 // Component Interfaces
 interface ProgressBarProps {
   currentStep: number;
   totalSteps: number;
-  onPrevious: () => void;
-  onNext: () => void;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps, onPrevious, onNext }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ currentStep, totalSteps }) => {
   return (
     <ProgressBarContainer>
       <Navigation>
-        <NavButton onClick={onPrevious}>&lt;</NavButton>
+        <NavButton>&lt;</NavButton>
         <Indicators>
           {Array.from({ length: totalSteps }).map((_, index) => (
             <Dot key={index} active={index === currentStep - 1} />
           ))}
         </Indicators>
-        <NavButton onClick={onNext}>&gt;</NavButton>
+        <NavButton>&gt;</NavButton>
       </Navigation>
     </ProgressBarContainer>
   );
@@ -121,10 +120,7 @@ const SignupForm: React.FC<{ handleNext: () => void }> = ({ handleNext }) => {
           </PasswordContainer>
         </FormGroup>
         
-        <SubmitButton type="button" onClick={() => {
-    console.log("다음 버튼 클릭됨");
-    handleNext();
-  }}>다음</SubmitButton>
+        <SubmitButton type="button" onClick={() => {handleNext();}}>다음</SubmitButton>
       </form>
       
       <ForgotPassword>
@@ -172,16 +168,39 @@ const WalletForm: React.FC = () => {
   );
 };
 
+const SuccessForm: React.FC = () => {
+  let navigate = useNavigate();
+
+  return (
+    <SignupContainer>
+      <Title>회원가입</Title>
+      <Subtitle>XRP 지갑 연동하기</Subtitle>
+      
+      <div style={{ marginBottom: '20px' }}>
+        <WalletContainer>
+          <img src={SuccessIcon}></img>
+          <WalletButtonContainer>
+            <SuccessMessage>
+              Name님의 지갑이 <br></br>
+              연동 완료되었습니다!
+            </SuccessMessage>
+          </WalletButtonContainer>
+        </WalletContainer>
+      </div>
+        
+      <SubmitButton type="button">회원가입</SubmitButton>
+
+      <ForgotPassword>
+        이미 계정이 있으신가요?<ForgotLink onClick={() => navigate('/')}>로그인</ForgotLink>
+      </ForgotPassword>
+    </SignupContainer>
+  );
+};
+
 // Main Component
 const SignupPage: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const totalSteps = 2;
-
-  const handlePrevious = () => {
-    if (currentStep > 1) {
-      setCurrentStep(prev => prev - 1);
-    }
-  };
 
   const handleNext = () => {
     console.log("handleNext 호출됨! 현재 단계:", currentStep);
@@ -201,12 +220,11 @@ const SignupPage: React.FC = () => {
           <ProgressBar 
             currentStep={currentStep} 
             totalSteps={totalSteps}
-            onPrevious={handlePrevious}
-            onNext={handleNext}
           />
           {/* <SignupForm /> */}
           {/* <WalletForm /> */}
-          {currentStep === 1 ? <SignupForm handleNext={handleNext} /> : <WalletForm />}
+          <SuccessForm></SuccessForm>
+          {/* {currentStep === 1 ? <SignupForm handleNext={handleNext} /> : <WalletForm />} */}
           
       </Main>
     </AppContainer>
