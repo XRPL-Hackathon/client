@@ -49,23 +49,23 @@ export async function signUp({
               result?.user.getUsername() +
               "님, 회원 가입이 성공적으로 완료되었습니다.",
           });
+          console.log("회원가입 성공:", result);
 
-          signIn(Email, Password);
-
-          while (
-            !localStorage.getItem(
-              "CognitoIdentityServiceProvider.7j09fmn00udb6fpt8hhij1jlqk.e4089d5c-d0f1-7074-6b70-a4fcc7bae68c.accessToken"
-            )
-          ) {
-            continue;
-          }
-
-          console.log(
-            "AccessToken in signup:",
-            localStorage.getItem(
-              "CognitoIdentityServiceProvider.7j09fmn00udb6fpt8hhij1jlqk.e4089d5c-d0f1-7074-6b70-a4fcc7bae68c.accessToken"
-            )
-          );
+          // 회원가입 후 바로 로그인 진행
+          (async () => {
+            try {
+              const accessToken = await signIn(Email, Password); // 로그인 처리
+              if (accessToken) {
+                resolve({
+                  message: "로그인 성공!" + accessToken,
+                });
+              } else {
+                reject({ message: "로그인 실패. 다시 시도해주세요." });
+              }
+            } catch (error) {
+              reject({ message: "로그인 중 오류가 발생했습니다: " + error });
+            }
+          })();
         }
       }
     );
