@@ -52,13 +52,19 @@ export async function signUp({
 
           signIn(Email, Password);
 
-          while (!localStorage.getItem("access_token")) {
+          while (
+            !localStorage.getItem(
+              "CognitoIdentityServiceProvider.7j09fmn00udb6fpt8hhij1jlqk.e4089d5c-d0f1-7074-6b70-a4fcc7bae68c.accessToken"
+            )
+          ) {
             continue;
           }
 
           console.log(
             "AccessToken in signup:",
-            localStorage.getItem("access_token")
+            localStorage.getItem(
+              "CognitoIdentityServiceProvider.7j09fmn00udb6fpt8hhij1jlqk.e4089d5c-d0f1-7074-6b70-a4fcc7bae68c.accessToken"
+            )
           );
         }
       }

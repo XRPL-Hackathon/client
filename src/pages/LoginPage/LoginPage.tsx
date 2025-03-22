@@ -57,7 +57,11 @@ const LoginPage: React.FC = () => {
       // 로그인 API 호출
       await signIn(formData.email, formData.password);
 
-      if (localStorage.getItem("access_token")) {
+      if (
+        localStorage.getItem(
+          "CognitoIdentityServiceProvider.7j09fmn00udb6fpt8hhij1jlqk.e4089d5c-d0f1-7074-6b70-a4fcc7bae68c.accessToken"
+        )
+      ) {
         // 로그인 성공 시, 대시보드로 이동
         navigate("/main");
       } else {
