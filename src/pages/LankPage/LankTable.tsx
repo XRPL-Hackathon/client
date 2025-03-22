@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import * as S from "@/pages/LankPage/LankTable.style";
+import frontArrow from "@/assets/image/frontArrow.svg";
+import backArrow from "@/assets/image/backArrow.svg";
 
 interface TableData {
   no: number;
@@ -35,6 +37,22 @@ const Table = () => {
   // 페이지네이션 처리
   const totalPages = Math.ceil(data.length / itemsPerPage);
 
+  // 페이지 버튼 생성 함수
+  const createPageButtons = () => {
+    const pageButtons = [];
+    const range = 2; // "현재 페이지"를 기준으로 보여줄 범위
+
+    for (
+      let i = Math.max(1, currentPage - range);
+      i <= Math.min(totalPages, currentPage + range);
+      i++
+    ) {
+      pageButtons.push(i);
+    }
+
+    return pageButtons;
+  };
+
   return (
     <S.StyledLankPage>
       <S.LankTable>
@@ -57,21 +75,31 @@ const Table = () => {
           ))}
         </tbody>
       </S.LankTable>
-
       {/* 페이지네이션 */}
-      <div>
-        <button onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}>
-          ◁
-        </button>
-        <span>{currentPage}</span>
-        <button
+      <S.PaginationWrapper>
+        <S.ArrowButton
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+        >
+          <img src={backArrow} alt="◁" />
+        </S.ArrowButton>
+        {createPageButtons().map((page: number) => (
+          <S.PageButton
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            active={page === currentPage}
+          >
+            {page}
+          </S.PageButton>
+        ))}
+        {currentPage + 2 < totalPages && <S.Ellipsis>...</S.Ellipsis>}
+        <S.ArrowButton
           onClick={() =>
             setCurrentPage((prev) => Math.min(prev + 1, totalPages))
           }
         >
-          ▷
-        </button>
-      </div>
+          <img src={frontArrow} alt="▷" />
+        </S.ArrowButton>
+      </S.PaginationWrapper>
     </S.StyledLankPage>
   );
 };

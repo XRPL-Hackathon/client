@@ -59,5 +59,5 @@ export const Lank = styled.div`
   border-radius: 16px;
   border: 1px solid #dee1e6;
   background: #fff;
-  padding: 30px;
+  padding: 25px;
 `;
