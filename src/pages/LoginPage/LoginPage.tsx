@@ -55,9 +55,9 @@ const LoginPage: React.FC = () => {
 
     try {
       // 로그인 API 호출
-      await signIn(formData.email, formData.password);
+      const accessToken = await signIn(formData.email, formData.password);
 
-      if (localStorage.getItem("access_token")) {
+      if (accessToken) {
         // 로그인 성공 시, 대시보드로 이동
         navigate("/main");
       } else {

@@ -5,17 +5,35 @@ import ConnectIcon from "../../assets/connect_icon.svg";
 import SuccessIcon from "../../assets/succes.svg";
 import logo from "../../assets/image/logo.svg";
 import { signUp } from "@/hooks/uaeSignup";
+import API from "@/api/index";
 
 import {
-
-  AppContainer, Header,
-  Main, ProgressBarContainer, Navigation, NavButton, Indicators, 
-  Dot, SignupContainer, Title, Subtitle, FormGroup, Label, Input,
-  PasswordContainer, ToggleVisibility, SubmitButton, ForgotPassword, 
-  ForgotLink, WalletButton, WalletButtonContainer, WalletContainer, SuccessMessage,
-  EyeIcon, Form
-} from './SignupPage.style';
-
+  AppContainer,
+  Header,
+  Main,
+  ProgressBarContainer,
+  Navigation,
+  NavButton,
+  Indicators,
+  Dot,
+  SignupContainer,
+  Title,
+  Subtitle,
+  FormGroup,
+  Label,
+  Input,
+  PasswordContainer,
+  ToggleVisibility,
+  SubmitButton,
+  ForgotPassword,
+  ForgotLink,
+  WalletButton,
+  WalletButtonContainer,
+  WalletContainer,
+  SuccessMessage,
+  EyeIcon,
+  Form,
+} from "./SignupPage.style";
 
 // Component Interfaces
 interface ProgressBarProps {
@@ -64,7 +82,7 @@ const SignupForm: React.FC<{
     <SignupContainer>
       <Title>회원가입</Title>
       <Subtitle>회원 정보 입력</Subtitle>
-      
+
       <Form onSubmit={handleSubmit}>
         <FormGroup>
           <Label htmlFor="name">이름</Label>
@@ -93,9 +111,8 @@ const SignupForm: React.FC<{
         <FormGroup>
           <Label htmlFor="password">비밀번호</Label>
           <PasswordContainer>
-
-            <Input 
-              id="password" 
+            <Input
+              id="password"
               name="password"
               placeholder="비밀번호를 입력해주세요."
               value={formData.password}
@@ -107,18 +124,23 @@ const SignupForm: React.FC<{
         <FormGroup>
           <Label htmlFor="confirmPassword">비밀번호 확인</Label>
           <PasswordContainer>
-
-            <Input 
-              id="confirmPassword" 
-
+            <Input
+              id="confirmPassword"
               name="confirmPassword"
               placeholder="비밀번호를 입력해주세요."
               value={formData.confirmPassword}
               onChange={handleChange}
             />
-     <ToggleVisibility >
+            <ToggleVisibility>
               <EyeIcon>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
                   <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
@@ -126,7 +148,7 @@ const SignupForm: React.FC<{
             </ToggleVisibility>
           </PasswordContainer>
         </FormGroup>
-        
+
         <SubmitButton
           type="button"
           onClick={() => {
@@ -136,7 +158,6 @@ const SignupForm: React.FC<{
           다음
         </SubmitButton>
       </Form>
-      
 
       <ForgotPassword>
         이미 계정이 있으신가요?
@@ -148,7 +169,25 @@ const SignupForm: React.FC<{
 
 const WalletForm: React.FC<{ handleNext: () => void }> = ({ handleNext }) => {
   let navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [wallet, setWallet] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  // 지갑 발급하기
+  const handleCreateWallet = async () => {
+    try {
+      setLoading(true);
+      const response = await API.post("/users/wallets", {});
+      console.log("Wallet created:", response.data);
 
+      // 서버로부터 받은 응답 처리 (예: 지갑 주소 반환)
+    } catch (error) {
+      setErrorMessage("지갑 발급 실패");
+      console.error("Error creating wallet:", error);
+    } finally {
+      setLoading(false);
+      setWallet(true);
+    }
+  };
   return (
     <SignupContainer>
       <Title>회원가입</Title>
@@ -169,10 +208,17 @@ const WalletForm: React.FC<{ handleNext: () => void }> = ({ handleNext }) => {
             <img src={ConnectIcon}></img>
             <WalletButtonContainer>
               <div>XRP 지갑이 없다면,</div>
-              <WalletButton>지갑 발급하기</WalletButton>
+              <WalletButton onClick={handleCreateWallet} disabled={loading}>
+                {loading
+                  ? "발급 중..."
+                  : wallet
+                  ? "발급완료!"
+                  : "지갑 발급하기"}
+              </WalletButton>
             </WalletButtonContainer>
           </WalletContainer>
         </div>
+        {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
       </form>
 
       {/* 임의로 넣은 버튼임 */}
@@ -208,7 +254,9 @@ const SuccessForm: React.FC<{ formData: any }> = ({ formData }) => {
         </WalletContainer>
       </div>
 
-      <SubmitButton type="button">회원가입</SubmitButton>
+      <SubmitButton type="button" onClick={() => navigate("/main")}>
+        XRPedia로 이동
+      </SubmitButton>
 
       <ForgotPassword>
         이미 계정이 있으신가요?
@@ -230,7 +278,7 @@ const SignupPage: React.FC = () => {
     confirmPassword: "",
   });
 
-  const handleNext = async (): Promise<void> => {
+  const signUpHandNext = async (): Promise<void> => {
     console.log("handleNext 호출됨! 현재 단계:", currentStep);
     console.log("현재 formData 상태:", formData);
 
@@ -254,6 +302,21 @@ const SignupPage: React.FC = () => {
     }
   };
 
+  const handleNext = async (): Promise<void> => {
+    console.log("handleNext 호출됨! 현재 단계:", currentStep);
+    console.log("현재 formData 상태:", formData);
+
+    try {
+      // 요청이 성공했으면 다음 단계로 진행
+      if (currentStep < totalSteps) {
+        setCurrentStep((prev) => prev + 1);
+      }
+    } catch (error: any) {
+      // 오류 처리
+      console.error("회원가입 실패:", error);
+    }
+  };
+
   return (
     <AppContainer>
       <Header>
@@ -263,7 +326,7 @@ const SignupPage: React.FC = () => {
         <ProgressBar currentStep={currentStep} totalSteps={totalSteps} />
         {currentStep === 1 && (
           <SignupForm
-            handleNext={handleNext}
+            handleNext={signUpHandNext}
             formData={formData}
             setFormData={setFormData}
           />

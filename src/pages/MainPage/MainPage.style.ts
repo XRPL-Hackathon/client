@@ -173,6 +173,7 @@ export const FileItem = styled.div`
 // Image (이미지 영역)
 export const FileImage = styled.div`
   height: 120px;
+  width: 70px;
   background-color: #e0e0e0;
   display: flex;
   align-items: center;

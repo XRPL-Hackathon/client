@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import NavBar from "@/components/NavBar/NavBar";
 import {
   FileAskPageWrapper,
@@ -11,11 +11,16 @@ import {
   TotalAmount,
   SubmitButton,
 } from "./FileAskPage.style";
+import { usePriceFee } from "@/hooks/usePrice";
 
 const FileAskPage = () => {
   const [xrpPrice, setXrpPrice] = useState(10); // XRP 가격 상태
   const [rlusdPrice, setRlusdPrice] = useState(2); // RLUSD 수수료 상태
 
+  useEffect(() => {
+    // 💡 useEffect 훅을 사용하여 usePriceFee 훅을 호출
+    usePriceFee(xrpPrice);
+  }, [xrpPrice]); // 💡 xrpPrice가 변경될 때마다 useEffect 훅이 호출
   // 💡 가격(XRP) + 수수료(RLUSD)의 합을 계산
   const totalPrice = xrpPrice + rlusdPrice;
 

@@ -1,13 +1,29 @@
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import * as S from "@/components/NavBar/NavBar.style";
 import logo from "@/assets/image/logo.svg";
 import doc from "@/assets/image/doc.svg";
 import lank from "@/assets/image/lank.svg";
 import add from "@/assets/image/add.svg";
 import logout from "@/assets/image/logout.svg";
+import API from "@/api/index";
 
 const NavBar = () => {
   const navigate = useNavigate();
+
+  const [user, setUser] = useState({
+    user_id: "",
+    nickname: "",
+    level_title: "",
+    point: 0.0,
+    total_revenue: 0.0,
+  });
+
+  useEffect(() => {
+    API.get("/users").then((response) => {
+      setUser(response.data);
+    });
+  }, []);
 
   return (
     <S.NavBar>
@@ -36,18 +52,20 @@ const NavBar = () => {
                   src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
                   alt="Profile"
                 />
-                <span className="user-name">사용자 이름</span>
+                <span className="user-name">{user.nickname} 님</span>
               </span>
               <hr className="dropdown-hr" />
-              <S.StyledLankLabel rank="골드">골드</S.StyledLankLabel>
-              <div className="content">포인트: 1000</div>
-              <div className="content">누적수익: 1000</div>
+              <S.StyledLankLabel rank="골드">
+                {user.level_title}
+              </S.StyledLankLabel>
+              <div className="content">포인트: {user.point}</div>
+              <div className="content">누적수익: {user.total_revenue}</div>
               <hr className="dropdown-hr" />
               <a href="/fileask">
                 <img src={doc} alt="Doc" />
                 문서 요청하기
               </a>
-              <a href="/mypage">
+              <a href="/lank">
                 <img src={lank} alt="Lank" />
                 랭킹 페이지
               </a>

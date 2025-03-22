@@ -49,17 +49,23 @@ export async function signUp({
               result?.user.getUsername() +
               "님, 회원 가입이 성공적으로 완료되었습니다.",
           });
+          console.log("회원가입 성공:", result);
 
-          signIn(Email, Password);
-
-          while (!localStorage.getItem("access_token")) {
-            continue;
-          }
-
-          console.log(
-            "AccessToken in signup:",
-            localStorage.getItem("access_token")
-          );
+          // 회원가입 후 바로 로그인 진행
+          (async () => {
+            try {
+              const accessToken = await signIn(Email, Password); // 로그인 처리
+              if (accessToken) {
+                resolve({
+                  message: "로그인 성공!" + accessToken,
+                });
+              } else {
+                reject({ message: "로그인 실패. 다시 시도해주세요." });
+              }
+            } catch (error) {
+              reject({ message: "로그인 중 오류가 발생했습니다: " + error });
+            }
+          })();
         }
       }
     );
