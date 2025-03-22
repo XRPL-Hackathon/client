@@ -1,6 +1,7 @@
 import NavBar from "@/components/NavBar/NavBar";
 import * as S from "@/pages/LankPage/LankPage.style";
 import info from "@/assets/image/info.svg";
+import Table from "@/pages/LankPage/LankTable";
 
 const LankPage = () => {
   return (
@@ -51,9 +52,7 @@ const LankPage = () => {
           </div>
         </S.LankDescription>
         <S.Lank>
-          <div>Shorten your link</div>
-          <input placeholder="Paste your link here" />
-          <button>Shorten</button>
+          <Table />
         </S.Lank>
       </S.StyledLankPage>
     </>
